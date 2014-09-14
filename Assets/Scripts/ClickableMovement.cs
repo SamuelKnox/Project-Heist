@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(PolyNavAgent))]
 [RequireComponent(typeof(Selectable))]
@@ -23,7 +22,7 @@ public class ClickableMovement : MonoBehaviour
         }
     }
 
-    private List<Vector2> waypoints = new List<Vector2>();
+    private Queue<Vector2> waypoints = new Queue<Vector2>();
 
     void Update()
     {
@@ -35,26 +34,25 @@ public class ClickableMovement : MonoBehaviour
         bool shouldAddDestination = Selectable.Selected && Input.GetMouseButtonDown(1);
         if (shouldAddDestination)
         {
-            bool shouldClearWaypoints = !Input.GetKey(KeyCode.LeftShift);
+            bool shouldClearWaypoints = !Input.GetKey(KeyCode.LeftShift) || !Waypoints;
             if (shouldClearWaypoints)
             {
                 waypoints.Clear();
             }
-            Vector2 newDestination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            waypoints.Add(newDestination);
+            Vector2 destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            waypoints.Enqueue(destination);
             if (waypoints.Count == 1)
             {
-                agent.SetDestination(waypoints[0]);
+                agent.SetDestination(waypoints.Peek());
             }
         }
     }
 
     void OnDestinationReached()
     {
-        waypoints.RemoveAt(0);
         if (waypoints.Count > 0)
         {
-            agent.SetDestination(waypoints[0]);
+            agent.SetDestination(waypoints.Dequeue());
         }
     }
 }
