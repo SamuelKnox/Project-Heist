@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(PolyNavAgent))]
 [RequireComponent(typeof(Selectable))]
 public class ClickableMovement : MonoBehaviour
 {
+    [Tooltip("Ability to Shift-Right-Click to set Waypoints enabled")]
+    public bool Waypoints = true;
     public PolyNavAgent agent
     {
         get
@@ -20,18 +23,38 @@ public class ClickableMovement : MonoBehaviour
         }
     }
 
+    private List<Vector2> waypoints = new List<Vector2>();
+
     void Update()
     {
-        UpdateDestination();
+        UpdateDestinations();
     }
 
-    private void UpdateDestination()
+    private void UpdateDestinations()
     {
-        bool shouldChangeDestination = Selectable.Selected && Input.GetMouseButtonDown(1);
-        if (shouldChangeDestination)
+        bool shouldAddDestination = Selectable.Selected && Input.GetMouseButtonDown(1);
+        if (shouldAddDestination)
         {
+            bool shouldClearWaypoints = !Input.GetKey(KeyCode.LeftShift);
+            if (shouldClearWaypoints)
+            {
+                waypoints.Clear();
+            }
             Vector2 newDestination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            agent.SetDestination(newDestination);
+            waypoints.Add(newDestination);
+            if (waypoints.Count == 1)
+            {
+                agent.SetDestination(waypoints[0]);
+            }
+        }
+    }
+
+    void OnDestinationReached()
+    {
+        waypoints.RemoveAt(0);
+        if (waypoints.Count > 0)
+        {
+            agent.SetDestination(waypoints[0]);
         }
     }
 }

@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b67c44453b18d4e86891ca3abe5e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Waypoints: 1
 --- !u!61 &335064856
 BoxCollider2D:
   m_ObjectHideFlags: 0
