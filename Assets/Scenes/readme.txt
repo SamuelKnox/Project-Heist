@@ -1,0 +1,1 @@
+This folder is for the Scenes.  All scenes, and only scenes, must go in this folder.

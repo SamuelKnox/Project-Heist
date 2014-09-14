@@ -1,0 +1,1 @@
+This folder is for prefabs only.  The folder must be named "Resources" in order to load them in the code behind.

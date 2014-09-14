@@ -1,0 +1,1 @@
+This folder is for media files, such as audio files and video files.  Images do not belong here.  Put images in the Textures folder.

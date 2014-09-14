@@ -1,0 +1,1 @@
+Do not put anything used in the project in this folder.  This is only for readme text files.
