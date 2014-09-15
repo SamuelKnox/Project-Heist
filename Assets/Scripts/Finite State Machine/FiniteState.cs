@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FiniteState : MonoBehaviour {
+public abstract class FiniteState : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    protected abstract void End();
 }
