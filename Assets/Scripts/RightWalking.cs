@@ -26,7 +26,7 @@ public class RightWalking : MonoBehaviour
 
     void OnDestinationReached()
     {
-        Destroy(gameObject.GetComponent<RightWalking>());
+        Destroy(this);
     }
     void OnDestroy()
     {
