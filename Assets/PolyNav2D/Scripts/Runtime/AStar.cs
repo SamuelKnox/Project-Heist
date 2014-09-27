@@ -3,140 +3,168 @@ using System.Collections;
 using System.Collections.Generic;
 
 ///Calculates paths using A*
-static class AStar {
+static class AStar
+{
 
-	private static float heuristicWeight = 1;
+    private static float heuristicWeight = 1;
 
-	//custom list for A* algorith
-	public class PriorityQueue : IComparer{
-		
-		private List<PathNode> nodes = new List<PathNode>();
-			
-		public int Compare ( System.Object a ,   System.Object b  ){ 
-	        PathNode nodeA = a as PathNode;
-	        PathNode nodeB = b as PathNode;
-	        if ( nodeA.estimatedCost < nodeB.estimatedCost){
-				return -1;
-			} else if (nodeA.estimatedCost > nodeB.estimatedCost){
-				return 1;
-			} else {
-				return 0;
-	    	}
-	    }
+    //custom list for A* algorith
+    public class PriorityQueue : IComparer
+    {
 
-	    public int Count{
-	    	get {return nodes.Count;}
-	    }
+        private List<PathNode> nodes = new List<PathNode>();
 
-		public int Push ( PathNode node  ){
-			nodes.Add(node);
-			nodes.Sort();
-			return nodes.Count;
-		}
-		
-		public PathNode Front (){
-			if (nodes.Count > 0){
-				return nodes[0];
-			} else {
-				return null;
-			}
-		}
-		
-		public bool Contains ( PathNode node  ){
-			 return nodes.Contains(node);
-		}
-		
-		public void  Remove ( PathNode node  ){
-			nodes.Remove(node);	
-			nodes.Sort();
-		}
-	}
+        public int Compare(System.Object a, System.Object b)
+        {
+            PathNode nodeA = a as PathNode;
+            PathNode nodeB = b as PathNode;
+            if (nodeA.estimatedCost < nodeB.estimatedCost)
+            {
+                return -1;
+            }
+            else if (nodeA.estimatedCost > nodeB.estimatedCost)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-	//A* implementation
-	public static IEnumerator CalculatePath(PathNode start, PathNode end, List<PathNode> allNodes, System.Action<List<Vector2>> callback){
+        public int Count
+        {
+            get { return nodes.Count; }
+        }
 
-		int n = 0;
+        public int Push(PathNode node)
+        {
+            nodes.Add(node);
+            nodes.Sort();
+            return nodes.Count;
+        }
 
-		PriorityQueue openList= new PriorityQueue();
-		PriorityQueue closedList= new PriorityQueue();
+        public PathNode Front()
+        {
+            if (nodes.Count > 0)
+            {
+                return nodes[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-		openList.Push(start);
-		start.cost = 0;
-		start.estimatedCost = HeuristicEstimate(start, end, heuristicWeight);
+        public bool Contains(PathNode node)
+        {
+            return nodes.Contains(node);
+        }
 
-		PathNode currentNode = null;
+        public void Remove(PathNode node)
+        {
+            nodes.Remove(node);
+            nodes.Sort();
+        }
+    }
 
-		while(openList.Count != 0){
+    //A* implementation
+    public static IEnumerator CalculatePath(PathNode start, PathNode end, List<PathNode> allNodes, System.Action<List<Vector2>> callback)
+    {
 
-			currentNode = openList.Front();
-			if (currentNode == end)
-				break;
+        int n = 0;
 
-			List<int> links = currentNode.links;
+        PriorityQueue openList = new PriorityQueue();
+        PriorityQueue closedList = new PriorityQueue();
 
-			for (int i= 0; i != links.Count; i++){
+        openList.Push(start);
+        start.cost = 0;
+        start.estimatedCost = HeuristicEstimate(start, end, heuristicWeight);
 
-				PathNode endNode = allNodes[links[i]];
+        PathNode currentNode = null;
 
-				float incrementalCost = GetCost(currentNode, endNode);
-				float endNodeCost = currentNode.cost + incrementalCost;
+        while (openList.Count != 0)
+        {
 
-				if (closedList.Contains(endNode)){
-					if (endNode.cost <= endNodeCost)
-						continue;
+            currentNode = openList.Front();
+            if (currentNode == end)
+                break;
 
-					closedList.Remove(endNode);
+            List<int> links = currentNode.links;
 
-				} else if (openList.Contains(endNode)){
-					if (endNode.cost <= endNodeCost)
-						continue;
-				}
+            for (int i = 0; i != links.Count; i++)
+            {
 
-				float endNodeHeuristic = HeuristicEstimate(endNode, end, heuristicWeight);
-				endNode.cost = endNodeCost;
-				endNode.parent = currentNode;
-				endNode.estimatedCost = endNodeCost + endNodeHeuristic;
+                PathNode endNode = allNodes[links[i]];
 
-				if (!openList.Contains(endNode))
-					openList.Push(endNode);
-			}
+                float incrementalCost = GetCost(currentNode, endNode);
+                float endNodeCost = currentNode.cost + incrementalCost;
 
-			closedList.Push(currentNode);
-			openList.Remove(currentNode);
+                if (closedList.Contains(endNode))
+                {
+                    if (endNode.cost <= endNodeCost)
+                        continue;
 
-			n ++;
-			if (n > 300)
-				yield return null;
-		}
+                    closedList.Remove(endNode);
 
-		if (!currentNode.Equals(end)){
-			
-			// Debug.LogWarning("No path found :(");
-			callback(new List<Vector2>());
-			yield break;
-		
-		} else {
+                }
+                else if (openList.Contains(endNode))
+                {
+                    if (endNode.cost <= endNodeCost)
+                        continue;
+                }
 
-			var path= new List<Vector2>();
+                float endNodeHeuristic = HeuristicEstimate(endNode, end, heuristicWeight);
+                endNode.cost = endNodeCost;
+                endNode.parent = currentNode;
+                endNode.estimatedCost = endNodeCost + endNodeHeuristic;
 
-			while (currentNode != null){
+                if (!openList.Contains(endNode))
+                    openList.Push(endNode);
+            }
 
-				path.Add(currentNode.pos);
-				currentNode = currentNode.parent;
-			}
+            closedList.Push(currentNode);
+            openList.Remove(currentNode);
 
-			path.Reverse();
-			callback(path);
-			yield break;
-		}
-	}
+            n++;
+            if (n > 300)
+                yield return null;
+        }
+
+        if (!currentNode.Equals(end))
+        {
+
+            // Debug.LogWarning("No path found :(");
+            callback(new List<Vector2>());
+            yield break;
+
+        }
+        else
+        {
+
+            var path = new List<Vector2>();
+
+            while (currentNode != null)
+            {
+
+                path.Add(currentNode.pos);
+                currentNode = currentNode.parent;
+            }
+
+            path.Reverse();
+            callback(path);
+            yield break;
+        }
+    }
 
 
-	private static float HeuristicEstimate ( PathNode currentNode, PathNode endNode, float heuristicWeight ){
-		return (currentNode.pos - endNode.pos).magnitude * heuristicWeight;
-	}
-	
-	private static float GetCost ( PathNode nodeA, PathNode nodeB){
-		return (nodeA.pos - nodeB.pos).magnitude;
-	}
+    private static float HeuristicEstimate(PathNode currentNode, PathNode endNode, float heuristicWeight)
+    {
+        return (currentNode.pos - endNode.pos).magnitude * heuristicWeight;
+    }
+
+    private static float GetCost(PathNode nodeA, PathNode nodeB)
+    {
+        return (nodeA.pos - nodeB.pos).magnitude;
+    }
 }

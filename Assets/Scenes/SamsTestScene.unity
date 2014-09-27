@@ -291,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VelocityMultipler: {x: 1, y: .5}
   maxSpeed: 5
   mass: 20
   stoppingDistance: .100000001
@@ -634,6 +635,22 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: WayPoints.Array.data[0].x
+      value: -9.39999962
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: VelocityMultipler.y
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
   m_RootGameObject: {fileID: 1796335244}
@@ -677,6 +694,22 @@ Prefab:
     - target: {fileID: 400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
+      propertyPath: YSpeedMultiplier
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
+      propertyPath: maxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
+      propertyPath: YVelocityMultiplier
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
+      propertyPath: VelocityMultipler.y
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
@@ -874,6 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VelocityMultipler: {x: 1, y: .5}
   maxSpeed: 3.5
   mass: 20
   stoppingDistance: .100000001
@@ -898,7 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WayPoints:
-  - {x: -10, y: -1}
+  - {x: -9.39999962, y: -1}
   - {x: 1, y: -1}
   - {x: 3, y: -2}
 --- !u!1 &2122898960
