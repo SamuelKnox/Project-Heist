@@ -634,6 +634,18 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: WayPoints.Array.data[0].x
+      value: -10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
   m_RootGameObject: {fileID: 1796335244}
