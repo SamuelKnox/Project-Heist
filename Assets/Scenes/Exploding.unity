@@ -84,7 +84,7 @@ GameObject:
   - 4: {fileID: 281904946}
   - 212: {fileID: 281904945}
   m_Layer: 0
-  m_Name: background
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ GameObject:
   - 114: {fileID: 566015667}
   - 50: {fileID: 566015669}
   m_Layer: 0
-  m_Name: bomb
+  m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +235,7 @@ GameObject:
   - 50: {fileID: 928492987}
   - 114: {fileID: 928492988}
   m_Layer: 0
-  m_Name: door
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
