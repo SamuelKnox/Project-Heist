@@ -145,7 +145,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 335064850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.08000004, y: 0, z: 0}
+  m_LocalPosition: {x: -1.08000004, y: 1.53999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -518,8 +518,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1796335247}
   - 212: {fileID: 1796335246}
-  - 114: {fileID: 1796335245}
   - 114: {fileID: 1796335248}
+  - 114: {fileID: 1796335249}
   m_Layer: 0
   m_Name: AI
   m_TagString: Untagged
@@ -527,17 +527,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1796335245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1796335244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89225be6ca770d64a88796864ffd5d98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1796335246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -594,6 +583,21 @@ MonoBehaviour:
   sendMessages: 1
   debugPath: 1
   avoidRadius: 0
+--- !u!114 &1796335249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1796335244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69379dd90b5e5945903998f8bd21751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WayPoints:
+  - {x: -10, y: -1}
+  - {x: 1, y: -1}
+  - {x: 3, y: -2}
 --- !u!1 &2122898960
 GameObject:
   m_ObjectHideFlags: 0
