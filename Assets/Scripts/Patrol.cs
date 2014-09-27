@@ -23,12 +23,9 @@ public class Patrol : MonoBehaviour
         agent.SetDestination(WayPoints[indexInWaypoints]);
     }
 
-    void Update()
+    void OnDrawGizmos()
     {
-        if (Debug.isDebugBuild)
-        {
-            DrawDebugLinesBetweenWaypoints();
-        }
+        DrawDebugLinesBetweenWaypoints();
     }
 
     private void DrawDebugLinesBetweenWaypoints()
