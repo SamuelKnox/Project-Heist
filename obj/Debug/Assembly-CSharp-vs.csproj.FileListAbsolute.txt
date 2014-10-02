@@ -1,0 +1,11 @@
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\Assembly-CSharp.dll
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\Assembly-CSharp.pdb
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\UnityEditor.dll
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\UnityEngine.dll
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\Mono.Cecil.dll
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\nunit.framework.dll
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\Unity.DataContract.dll
+J:\Software_Dev\Heist\Code\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+J:\Software_Dev\Heist\Code\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+J:\Software_Dev\Heist\Code\obj\Debug\Assembly-CSharp.dll
+J:\Software_Dev\Heist\Code\obj\Debug\Assembly-CSharp.pdb
