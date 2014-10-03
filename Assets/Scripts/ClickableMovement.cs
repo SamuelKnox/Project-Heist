@@ -7,6 +7,14 @@ public class ClickableMovement : MonoBehaviour
 {
     [Tooltip("Ability to Shift-Right-Click to set Waypoints enabled")]
     public bool Waypoints = true;
+
+    private Vector3 pointToAdd;
+
+    public void AddPoint(Vector3 vec)
+    {
+        pointToAdd = vec;
+    }
+
     public PolyNavAgent agent
     {
         get
@@ -31,7 +39,7 @@ public class ClickableMovement : MonoBehaviour
 
     private void UpdateDestinations()
     {
-        bool shouldAddDestination = Selectable.Selected && Input.GetMouseButtonDown(1);
+        bool shouldAddDestination = Selectable.Selected && pointToAdd != Vector3.zero;//Input.GetMouseButtonDown(1);
         if (shouldAddDestination)
         {
             bool shouldClearWaypoints = !Input.GetKey(KeyCode.LeftShift) || !Waypoints;
@@ -39,7 +47,9 @@ public class ClickableMovement : MonoBehaviour
             {
                 waypoints.Clear();
             }
-            Vector2 destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 destination = Camera.main.ScreenToWorldPoint(pointToAdd);//Input.mousePosition);
+            pointToAdd = Vector3.zero;
+
             waypoints.Enqueue(destination);
             if (waypoints.Count == 1)
             {

@@ -404,6 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sneak: 0
   Visibility: .5
+  SpeedReduction: .5
 --- !u!114 &335064859
 MonoBehaviour:
   m_ObjectHideFlags: 0
