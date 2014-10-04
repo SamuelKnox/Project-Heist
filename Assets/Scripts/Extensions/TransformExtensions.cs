@@ -5,11 +5,22 @@ using System;
 public static class TransformExtensions
 {
     /// <summary>
-    /// Rotates a game object by a specified number of degrees over a set number of seconds
+    /// Rotates the transform by a specified number of degrees over a set number of seconds
     /// </summary>
     public static void RotateOverTime(this Transform transform, Vector3 degrees, float seconds)
     {
+        if (degrees == null)
+        {
+            Debug.LogError("degrees in Transform.RotateOverTime(Vector3 degrees, float seconds) is null.", transform);
+            return;
+        }
+        if (seconds == 0)
+        {
+            Debug.LogError("seconds in Transform.RotateOverTime(Vector3 degrees, float seconds) must be a positive number.", transform);
+            return;
+        }
         RotateOverTime rotateOverTimeComponent = transform.gameObject.AddComponent<RotateOverTime>();
+        rotateOverTimeComponent.hideFlags = HideFlags.HideInInspector;
         rotateOverTimeComponent.Degrees = degrees;
         rotateOverTimeComponent.Seconds = seconds;
     }
@@ -17,10 +28,8 @@ public static class TransformExtensions
 
 class RotateOverTime : MonoBehaviour
 {
-    [Tooltip("Degrees by which to rotate the game object.  Game object will be rotated locally.")]
-    public Vector3 Degrees;
-    [Tooltip("Time (in seconds) it takes until rotation is complete.")]
-    public float Seconds = 1.0F;
+    public Vector3 Degrees { get; set; }
+    public float Seconds { get; set; }
 
     private Vector3 rotationCompleted = Vector3.zero;
     private Vector3 speed;
