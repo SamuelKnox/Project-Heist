@@ -9,3 +9,14 @@ J:\Software_Dev\Heist\Code\Temp\bin\Debug\ICSharpCode.NRefactory.dll
 J:\Software_Dev\Heist\Code\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
 J:\Software_Dev\Heist\Code\obj\Debug\Assembly-CSharp.dll
 J:\Software_Dev\Heist\Code\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\UnityEditor.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\UnityEngine.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\nunit.framework.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\obj\Debug\Assembly-CSharp.dll
+C:\Users\Samuel\Desktop\Workspaces\Unity\Project Heist\obj\Debug\Assembly-CSharp.pdb
