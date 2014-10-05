@@ -9,11 +9,6 @@ public static class TransformExtensions
     /// </summary>
     public static void RotateOverTime(this Transform transform, Vector3 degrees, float seconds)
     {
-        if (degrees == null)
-        {
-            Debug.LogError("degrees in Transform.RotateOverTime(Vector3 degrees, float seconds) is null.", transform);
-            return;
-        }
         if (seconds == 0)
         {
             Debug.LogError("seconds in Transform.RotateOverTime(Vector3 degrees, float seconds) must be a positive number.", transform);
