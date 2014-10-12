@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Selectable))]
-public class ActionMenu : MonoBehaviour {
+public class ActionMenu : MonoBehaviour
+{
 
     public Selectable Selectable
     {
@@ -20,12 +21,13 @@ public class ActionMenu : MonoBehaviour {
 
     // Every possible command goes here. The relevant ones will be selected on menu creation.
     public GameObject moveHere;
-    
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start()
+    {
         liveButtons = new List<Object>();
         created = false;
-	}
+    }
 
     void OnGUI()
     {
@@ -57,8 +59,8 @@ public class ActionMenu : MonoBehaviour {
     }
 
     private void DestroyMenu()
-    {   
-        foreach(Object o in liveButtons)
+    {
+        foreach (Object o in liveButtons)
         {
             Destroy(o);
         }
