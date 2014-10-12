@@ -199,7 +199,7 @@ MonoBehaviour:
   EDITOR_SHOW_BOUNDS: 1
   EDITOR_SHOW_MESH: 0
   lightType: 0
-  lightRadius: 10
+  lightRadius: 4.38623238
   coneStart: 90
   coneAngle: 60
   lightColor: {r: 1, g: .600000024, b: 0, a: 0}
@@ -207,7 +207,7 @@ MonoBehaviour:
   lightMaterial: {fileID: 2100000, guid: e59eef300ef3e7d49b4def05ab2750f2, type: 2}
   shadowLayer:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 256
   useEvents: 1
   lightEnabled: 1
   beamSize: 25
@@ -556,6 +556,14 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: shadowLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: lightRadius
+      value: 4.38623238
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
   m_RootGameObject: {fileID: 1796335244}
@@ -812,6 +820,9 @@ GameObject:
   - 212: {fileID: 1796335246}
   - 114: {fileID: 1796335248}
   - 114: {fileID: 1796335249}
+  - 114: {fileID: 1796335251}
+  - 50: {fileID: 1796335250}
+  - 61: {fileID: 1796335245}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Guard
@@ -819,6 +830,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!61 &1796335245
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1796335244}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: .200000003, y: .600000024}
+  m_Center: {x: 0, y: 0}
 --- !u!212 &1796335246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -896,6 +918,33 @@ MonoBehaviour:
   - {x: -10, y: -1}
   - {x: 1, y: -1}
   - {x: 3, y: -2}
+--- !u!50 &1796335250
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1796335244}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1796335251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1796335244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6603318105d574ca3e94dcece4c758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  failure: 0
 --- !u!1 &1832825205
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +957,7 @@ GameObject:
   - 114: {fileID: 1832825206}
   - 50: {fileID: 1832825208}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WinZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
