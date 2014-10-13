@@ -4,11 +4,13 @@ using System.Collections;
 public class Lose : MonoBehaviour {
 
     public bool failure;
+    private bool first;
 
     // Use this for initialization
     void Start()
     {
         failure = false;
+        first = true;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -25,6 +27,9 @@ public class Lose : MonoBehaviour {
         if (failure)
         {
             GUI.TextField(new Rect(50, 50, 200, 50), "Yo Lose!");
+            if(first) 
+                Application.LoadLevel(Application.loadedLevel);
         }
     }
+
 }
