@@ -11,7 +11,7 @@ public enum GameItem
 /// Contains an with a slot for each item type, the value in the 
 /// slot indicates the quantity held of that item
 /// </summary>
-public class Inventory : MonoBehaviour {
+public class Inventory2 : MonoBehaviour {
 
 	public static int NUM_ITEMS =
 		System.Enum.GetNames(typeof(GameItem)).Length;
