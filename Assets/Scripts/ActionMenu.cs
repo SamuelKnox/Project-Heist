@@ -29,6 +29,7 @@ public class ActionMenu : MonoBehaviour
         created = false;
     }
 
+
     void OnGUI()
     {
         if (created && Input.GetMouseButtonDown(1) || !Selectable.Selected)
@@ -83,6 +84,11 @@ public class ActionMenu : MonoBehaviour
 
         if (movement)
         {
+            //temp code starts
+            DoorSystem door = GameObject.FindObjectOfType<DoorSystem>() as DoorSystem;
+            door.Interact();
+            //temp code ends
+
             created = false;
 
             ClickableMovement mov = GetComponent<ClickableMovement>();
