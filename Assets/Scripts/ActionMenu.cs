@@ -18,6 +18,7 @@ public class ActionMenu : MonoBehaviour
     private bool created;
     private float x, y;
     private List<Object> liveButtons;
+	private List<Interaction> liveInteractions;
 
     // Every possible command goes here. The relevant ones will be selected on menu creation.
     public GameObject moveHere;
@@ -26,6 +27,7 @@ public class ActionMenu : MonoBehaviour
     void Start()
     {
         liveButtons = new List<Object>();
+		liveInteractions = new List<Interaction>();
         created = false;
     }
 
@@ -54,6 +56,23 @@ public class ActionMenu : MonoBehaviour
         x = center.x;
         y = Screen.height - center.y;
 
+		Vector3 point = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		RaycastHit2D[] hits = Physics2D.LinecastAll (point, point);
+		if (hits.Length > 0)
+		{
+			//Debug.Log ("HIT " + hits[0].transform.gameObject.name);
+			//we will take the first object in the array
+			//TODO: handle multiple objects being detected
+			Transform obj = hits[0].transform;
+			Interaction[] interactables = obj.GetComponents<Interaction>();
+			foreach(Interaction inter in interactables)
+			{
+				if (inter.Visible(Selectable.transform))
+				{
+					liveInteractions.Add(inter);
+				}
+			}
+		}
         //moveHere.layer = LayerMask.NameToLayer("UI");
         //liveButtons.Add(Instantiate(moveHere, center + new Vector3(0, .1f, 10), Quaternion.identity));
         created = true;
@@ -66,6 +85,7 @@ public class ActionMenu : MonoBehaviour
             Destroy(o);
         }
         liveButtons.Clear();
+		liveInteractions.Clear();
         created = false;
     }
 
@@ -77,19 +97,33 @@ public class ActionMenu : MonoBehaviour
         float radius = 20;
         style.fontSize = 8;
 
-        bool moveHere = GUI.Button(new Rect(x - width / 2, y - height / 2 - radius, width, height), "Move Here");
-        bool sneakHere = GUI.Button(new Rect(x - width / 2, y - height / 2 + radius, width, height), "Sneak Here");
+		bool[] optionsSelected = new bool[liveInteractions.Count];
+		int i = 0;
+		foreach (Interaction inter in liveInteractions)
+		{
+			float angle = (360f / optionsSelected.Length) * i;
+			optionsSelected[i] = GUI.Button (new Rect(x + radius * Mathf.Cos (angle),
+			                                          y + radius * Mathf.Sin (angle),
+			                                          width, height), inter.MenuName());
+			i++;
+		}
+        bool moveHere = GUI.Button(new Rect(x - width / 2, y - height / 2 - radius * 2, width, height), "Move Here");
+        bool sneakHere = GUI.Button(new Rect(x - width / 2, y - height / 2 + radius * 2, width, height), "Sneak Here");
+
+		
+		for (i = 0; i < optionsSelected.Length; i++)
+		{
+			if (optionsSelected[i])
+			{
+				liveInteractions[i].Interact(Selectable.transform);
+				break;
+			}
+		}
 
         bool movement = moveHere || sneakHere;
-
         if (movement)
         {
-            //temp code starts
-            DoorSystem door = GameObject.FindObjectOfType<DoorSystem>() as DoorSystem;
-            door.Interact();
-            //temp code ends
-
-            created = false;
+			created = false;
 
             ClickableMovement mov = GetComponent<ClickableMovement>();
             mov.AddPoint(new Waypoint(new Vector3(x, Screen.height - y, 0), sneakHere));

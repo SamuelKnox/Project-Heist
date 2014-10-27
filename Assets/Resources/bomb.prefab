@@ -12,6 +12,7 @@ GameObject:
   - 60: {fileID: 6000000}
   - 114: {fileID: 11400000}
   - 50: {fileID: 5000000}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: bomb
   m_TagString: Untagged
@@ -57,10 +58,25 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_Poly:
     m_Paths:
-    - - {x: 1.33470106, y: -.034829855}
-      - {x: -.00631719828, y: -.769895673}
-      - {x: -1.31303525, y: -.0948129296}
-      - {x: .0156141818, y: .605504513}
+    - - {x: .389999986, y: .100000001}
+      - {x: .270000011, y: .239999995}
+      - {x: .119999997, y: .300000012}
+      - {x: .270000011, y: .419999987}
+      - {x: .25, y: .479999989}
+      - {x: .109999999, y: .479999989}
+      - {x: 0, y: .389999986}
+      - {x: -.280000001, y: .239999995}
+      - {x: -.430000007, y: .0500000007}
+      - {x: -.430000007, y: -.159999996}
+      - {x: -.400000006, y: -.25999999}
+      - {x: -.280000001, y: -.389999986}
+      - {x: -.150000006, y: -.469999999}
+      - {x: -.109999999, y: -.479999989}
+      - {x: .0599999987, y: -.479999989}
+      - {x: .189999998, y: -.449999988}
+      - {x: .280000001, y: -.409999996}
+      - {x: .419999987, y: -.209999993}
+      - {x: .419999987, y: -.00999999978}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,6 +93,25 @@ MonoBehaviour:
   strengthPower: 1
   blastDiameter: 3
   particlePrefab: {fileID: 400000, guid: 646589a2bd57187428cc01d63933396c, type: 2}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb1057704767fe40996390d1b593582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 2800000, guid: 53afd1f11751ff34f9e10f602848d50f, type: 3}
+  itemType: Bomb
+  stackable: 1
+  stack: 1
+  isEquipment: 1
+  isAlsoWeapon: 0
+  equippedWeaponVersion: {fileID: 0}
+  equipmentEffect: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

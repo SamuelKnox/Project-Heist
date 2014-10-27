@@ -24,7 +24,8 @@ private float lastUpdate = 0.0f; //Last time we updated the display.
 private Transform[] UpdatedList; //The updated inventory array.
 
 //More variables for the window:
-static bool displayInventory = false; //If inv is opened.
+[HideInInspector]
+public bool displayInventory = false; //If inv is opened.
 private Rect windowRect= new Rect(200,200,108,130); //Keeping track of the Inventory window.
 public GUISkin invSkin; //This is where you can add a custom GUI skin or use the one included (InventorySkin) under the Resources folder.
 Vector2 Offset = new Vector2 (7, 12); //This will leave so many pixels between the edge of the window (x = horizontal and y = vertical).
@@ -37,7 +38,7 @@ private Inventory associatedInventory;
 private bool cSheetFound = false;
 private Character cSheet;
 
-
+	
 
 //Store components and adjust the window position.
 void Awake (){
@@ -198,7 +199,7 @@ void DisplayInventoryWindow ( int windowID  ){
 		
 		if(item.stackable) //If the item can be stacked:
 		{
-			GUI.Label( new Rect(currentX, currentY, itemIconSize.x, itemIconSize.y), "" + item.stack, "Stacks"); //Showing the number (if stacked).
+			GUI.Label( new Rect(currentX, currentY, itemIconSize.x, itemIconSize.y), "" + item.stack); //Showing the number (if stacked).				
 		}
 		
 		currentX += itemIconSize.x;
