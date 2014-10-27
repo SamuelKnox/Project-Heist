@@ -111,7 +111,6 @@ MonoBehaviour:
   isEquipment: 1
   isAlsoWeapon: 0
   equippedWeaponVersion: {fileID: 0}
-  equipmentEffect: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

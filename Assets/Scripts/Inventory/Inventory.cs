@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 [AddComponentMenu ("Inventory/Inventory")]
 public class Inventory : MonoBehaviour {
 //This is the central piece of the Inventory System.
 
-public Transform[] Contents; //The content of the Inventory
+public List<Transform> Contents; //The content of the Inventory
 public int MaxContent = 12; //The maximum number of items the Player can carry.
 
 bool DebugMode = false; //If this is turned on the Inventory script will output the base of what it's doing to the Console window.
@@ -19,6 +20,7 @@ public Transform itemHolderObject; //The object the unactive items are going to 
 void Awake (){
 	itemHolderObject = gameObject.transform;
 	
+	Contents = new List<Transform> ();
 	playersInvDisplay = GetComponent<InventoryDisplay>();
 	if (playersInvDisplay == null)
 	{
@@ -29,11 +31,9 @@ void Awake (){
 
 //Add an item to the inventory.
 public void AddItem ( Transform Item  ){
-	ArrayList newContents = new ArrayList(Contents);
 	//FIXME_VAR_TYPE newContents= new Array(Contents);
-	newContents.Add(Item);
+	Contents.Add(Item);
 	//Contents=newContents.ToBuiltin(Transform); //Array to unity builtin array
-	newContents.CopyTo(Contents); //Array to unity builtin array
 	if (DebugMode)
 	{
 		Debug.Log(Item.name+" has been added to inventroy");
@@ -61,15 +61,14 @@ public Transform FindItemByType( string type ) {
 
 //Removed an item from the inventory (IT DOESN'T DROP IT).
 public void RemoveItem ( Transform Item  ){
-	ArrayList newContents = new ArrayList(Contents);
 	//FIXME_VAR_TYPE newContents=new Array(Contents); //!!!!//
 	int index = 0;
 	bool shouldend = false;
-	foreach(Transform i in newContents) //Loop through the Items in the Inventory:
+	foreach(Transform i in Contents) //Loop through the Items in the Inventory:
 	{
 		if(i == Item) //When a match is found, remove the Item.
 		{
-			newContents.RemoveAt(index);
+			Contents.RemoveAt(index);
 			shouldend=true;
 			//No need to continue running through the loop since we found our item.
 		}
@@ -78,7 +77,6 @@ public void RemoveItem ( Transform Item  ){
 		if(shouldend) //Exit the loop
 		{
 			//Contents=newContents.ToBuiltin(Transform); //!!!!//
-			Contents=newContents.ToArray(typeof (Transform)) as Transform[];
 			if (DebugMode)
 			{
 				Debug.Log(Item.name+" has been removed from inventroy");

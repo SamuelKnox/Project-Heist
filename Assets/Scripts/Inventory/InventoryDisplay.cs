@@ -51,7 +51,7 @@ void Awake (){
 
 //Update the inv list
 public void UpdateInventoryList (){
-	UpdatedList = associatedInventory.Contents;
+	UpdatedList = associatedInventory.Contents.ToArray();
 	//Debug.Log("Inventory Updated");
 }
 

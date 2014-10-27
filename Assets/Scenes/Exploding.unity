@@ -448,6 +448,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400016, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
+      propertyPath: Contents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
       propertyPath: m_LocalPosition.x
       value: -.898329198
@@ -479,6 +483,10 @@ Prefab:
     - target: {fileID: 400000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400016, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
+      propertyPath: Contents.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9922e34dd99aacf489728f092b7f8e1f, type: 2}
@@ -700,8 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af88dbe162975044a9c7488c29d98991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Contents:
-  - {fileID: 400000, guid: 5eb71c2cc059ccf478192cd8673fb7ce, type: 2}
+  Contents: []
   MaxContent: 12
   itemHolderObject: {fileID: 1585362269}
 --- !u!1 &1772815815

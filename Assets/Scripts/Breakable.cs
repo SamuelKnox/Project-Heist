@@ -18,7 +18,7 @@ public class Breakable : Interaction {
 				Transform bomb = inv.FindItemByType("Bomb");
 				if (bomb != null)
 				{
-					inv.RemoveItem(bomb);
+					inv.DropItem(bomb.GetComponent<Item>());
 				}
 			}
 		}

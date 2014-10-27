@@ -77,12 +77,12 @@ public void PickUpItem (){
 			}
 		}
 		//If we can get it and the inventory isn't full.
-		if (getit && playersinv.Contents.Length < playersinv.MaxContent)
+		if (getit && playersinv.Contents.Count < playersinv.MaxContent)
 		{
 			playersinv.AddItem(this.transform);
 			MoveMeToThePlayer(playersinv.itemHolderObject);//moves the object, to the player
 		}
-		else if (playersinv.Contents.Length >= playersinv.MaxContent)
+		else if (playersinv.Contents.Count >= playersinv.MaxContent)
 		{
 			Debug.Log("Inventory is full");
 		}
