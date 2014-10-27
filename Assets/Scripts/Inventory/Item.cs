@@ -20,8 +20,6 @@ static Inventory playersinv;
 
 private bool FPPickUpFound = false;
 
-[AddComponentMenu ("Inventory/Items/Item")]
-
 //Here we find the components we need.
 void Awake (){
 	playersinv = FindObjectOfType(typeof(Inventory)) as Inventory; //finding the players inv.

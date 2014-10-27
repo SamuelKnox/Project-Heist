@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-[AddComponentMenu ("Inventory/Inventory")]
+
 public class Inventory : MonoBehaviour {
 //This is the central piece of the Inventory System.
 

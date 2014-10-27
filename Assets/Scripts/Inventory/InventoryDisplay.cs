@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-[AddComponentMenu ("Inventory/Inventory Display")]
 [RequireComponent(typeof (Inventory))]
 
 public class InventoryDisplay : MonoBehaviour {

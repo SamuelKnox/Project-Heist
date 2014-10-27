@@ -19,6 +19,7 @@ public class Breakable : Interaction {
 				if (bomb != null)
 				{
 					inv.DropItem(bomb.GetComponent<Item>());
+					bomb.GetComponent<Explodable>().automatic = true;	//temporary
 				}
 			}
 		}

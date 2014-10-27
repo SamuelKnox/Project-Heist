@@ -116,6 +116,8 @@ public class ActionMenu : MonoBehaviour
 		{
 			if (optionsSelected[i])
 			{
+				created = false;
+
 				liveInteractions[i].Interact(Selectable.transform);
 				break;
 			}
@@ -129,6 +131,5 @@ public class ActionMenu : MonoBehaviour
             ClickableMovement mov = GetComponent<ClickableMovement>();
             mov.AddPoint(new Waypoint(new Vector3(x, Screen.height - y, 0), sneakHere));
         }
-
     }
 }

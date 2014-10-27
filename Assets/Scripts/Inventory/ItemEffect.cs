@@ -1,12 +1,9 @@
 using UnityEngine;
 using System.Collections;
-[AddComponentMenu ("Inventory/Items/Item Effect")]
 [RequireComponent(typeof (Item))]
 public class ItemEffect : MonoBehaviour {
-
-
+	
 //This script allows you to insert code when the Item is used (clicked on in the inventory).
-
 bool deleteOnUse = true;
 
 private Inventory playersInv;
