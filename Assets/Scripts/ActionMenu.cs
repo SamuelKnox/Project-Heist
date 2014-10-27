@@ -56,6 +56,7 @@ public class ActionMenu : MonoBehaviour
         x = center.x;
         y = Screen.height - center.y;
 
+		liveInteractions.Clear();
 		Vector3 point = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		RaycastHit2D[] hits = Physics2D.LinecastAll (point, point);
 		if (hits.Length > 0)
@@ -94,16 +95,16 @@ public class ActionMenu : MonoBehaviour
         GUIStyle style = GUI.skin.GetStyle("button");
         float width = 50;
         float height = 20;
-        float radius = 20;
+        float radius = 40;
         style.fontSize = 8;
 
 		bool[] optionsSelected = new bool[liveInteractions.Count];
 		int i = 0;
 		foreach (Interaction inter in liveInteractions)
 		{
-			float angle = (360f / optionsSelected.Length) * i;
-			optionsSelected[i] = GUI.Button (new Rect(x + radius * Mathf.Cos (angle),
-			                                          y + radius * Mathf.Sin (angle),
+			float angle = (Mathf.PI * 2 / optionsSelected.Length) * i;
+			optionsSelected[i] = GUI.Button (new Rect(x - width / 2 + radius * Mathf.Cos (angle),
+			                                          y - height / 2 + radius * Mathf.Sin (angle),
 			                                          width, height), inter.MenuName());
 			i++;
 		}

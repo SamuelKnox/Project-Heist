@@ -9,6 +9,20 @@ public class Breakable : Interaction {
 
 	public override void Interact (params Transform[] lst)
 	{
+		if (lst.Length > 0)
+		{
+			Transform player = lst[0];
+			Inventory inv = player.GetComponentInChildren<Inventory>();
+			if (inv != null)
+			{
+				Transform bomb = inv.FindItemByType("Bomb");
+				if (bomb != null)
+				{
+					inv.RemoveItem(bomb);
+				}
+			}
+		}
+
 		//verify player has dynamite
 		//queue move to here
 		//queue drop dynamite
@@ -24,8 +38,7 @@ public class Breakable : Interaction {
 			Inventory inv = player.GetComponentInChildren<Inventory>();
 			if (inv != null)
 			{
-				//if player has dynamite
-				//	return true
+				return (inv.FindItemByType("Bomb") != null);	//TODO: clean up
 			}
 		}
 		return false;

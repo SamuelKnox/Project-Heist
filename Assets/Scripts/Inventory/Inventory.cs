@@ -29,7 +29,7 @@ void Awake (){
 
 //Add an item to the inventory.
 public void AddItem ( Transform Item  ){
-	ArrayList newContents = new ArrayList();
+	ArrayList newContents = new ArrayList(Contents);
 	//FIXME_VAR_TYPE newContents= new Array(Contents);
 	newContents.Add(Item);
 	//Contents=newContents.ToBuiltin(Transform); //Array to unity builtin array
@@ -46,9 +46,22 @@ public void AddItem ( Transform Item  ){
 	}
 }
 
+public Transform FindItemByType( string type ) {
+	foreach (Transform i in Contents)
+	{
+		if (i.GetComponent<Item>() != null)
+		{
+			Item item = i.GetComponent<Item>();
+			if (item.itemType == type)
+				return i;
+		}
+	}
+	return null;
+}
+
 //Removed an item from the inventory (IT DOESN'T DROP IT).
 public void RemoveItem ( Transform Item  ){
-		ArrayList newContents = new ArrayList();
+	ArrayList newContents = new ArrayList(Contents);
 	//FIXME_VAR_TYPE newContents=new Array(Contents); //!!!!//
 	int index = 0;
 	bool shouldend = false;
