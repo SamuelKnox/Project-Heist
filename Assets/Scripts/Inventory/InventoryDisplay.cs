@@ -1,55 +1,59 @@
+using UnityEngine;
+using System.Collections;
+[AddComponentMenu ("Inventory/Inventory Display")]
+[RequireComponent(typeof (Inventory))]
+
+public class InventoryDisplay : MonoBehaviour {
 //Displaying the Inventory.
 
 //Variables for dragging:
-static var itemBeingDragged : Item; //This refers to the 'Item' script when dragging.
-private var draggedItemPosition : Vector2; //Where on the screen we are dragging our Item.
-private var draggedItemSize : Vector2;//The size of the item icon we are dragging.
+public Item itemBeingDragged; //This refers to the 'Item' script when dragging.
+private Vector2 draggedItemPosition; //Where on the screen we are dragging our Item.
+private Vector2 draggedItemSize;//The size of the item icon we are dragging.
 
 //Variables for the window:
-var windowSize:Vector2 = Vector2(375, 162.5); //The size of the Inventory window.
-var useCustomPosition = false; //Do we want to use the customPosition variable to define where on the screen the Inventory window will appear?
-var customPosition : Vector2 = Vector2 (70, 400); // The custom position of the Inventory window.
-var itemIconSize : Vector2 = Vector2(60.0, 60.0); //The size of the item icons.
+Vector2 windowSize = new Vector2(375, 162.5f); //The size of the Inventory window.
+bool useCustomPosition = false; //Do we want to use the customPosition variable to define where on the screen the Inventory window will appear?
+Vector2 customPosition = new Vector2 (70, 400); // The custom position of the Inventory window.
+Vector2 itemIconSize = new Vector2(60.0f, 60.0f); //The size of the item icons.
 
 //Variables for updating the inventory
-var updateListDelay = 9999;//This can be used to update the Inventory with a certain delay rather than updating it every time the OnGUI is called.
+float updateListDelay = 9999;//This can be used to update the Inventory with a certain delay rather than updating it every time the OnGUI is called.
 //This is only useful if you are expanding on the Inventory System cause by default Inventory has a system for only updating when needed (when an item is added or removed).
-private var lastUpdate = 0.0; //Last time we updated the display.
-private var UpdatedList : Transform[]; //The updated inventory array.
+private float lastUpdate = 0.0f; //Last time we updated the display.
+private Transform[] UpdatedList; //The updated inventory array.
 
 //More variables for the window:
-static var displayInventory = false; //If inv is opened.
-private var windowRect =Rect (200,200,108,130); //Keeping track of the Inventory window.
-var invSkin:GUISkin; //This is where you can add a custom GUI skin or use the one included (InventorySkin) under the Resources folder.
-var Offset : Vector2 = Vector2 (7, 12); //This will leave so many pixels between the edge of the window (x = horizontal and y = vertical).
-var canBeDragged = true; //Can the Inventory window be dragged?
+static bool displayInventory = false; //If inv is opened.
+private Rect windowRect= new Rect(200,200,108,130); //Keeping track of the Inventory window.
+public GUISkin invSkin; //This is where you can add a custom GUI skin or use the one included (InventorySkin) under the Resources folder.
+Vector2 Offset = new Vector2 (7, 12); //This will leave so many pixels between the edge of the window (x = horizontal and y = vertical).
+bool canBeDragged = true; //Can the Inventory window be dragged?
 
-var onOffButton : KeyCode = KeyCode.I; //The button that turns the Inventory window on and off.
+public KeyCode onOffButton = KeyCode.I; //The button that turns the Inventory window on and off.
 
 //Keeping track of components.
-private var associatedInventory : Inventory;
-private var cSheetFound = false;
-private var cSheet : Character;
+private Inventory associatedInventory;
+private bool cSheetFound = false;
+private Character cSheet;
 
-@script AddComponentMenu ("Inventory/Inventory Display")
-@script RequireComponent(Inventory)
+
 
 //Store components and adjust the window position.
-function Awake()
-{
+void Awake (){
 	if (useCustomPosition == false)
 	{
-		windowRect=Rect(Screen.width-windowSize.x-70,Screen.height-windowSize.y-70,windowSize.x,windowSize.y);
+		windowRect= new Rect(Screen.width-windowSize.x-70,Screen.height-windowSize.y-70,windowSize.x,windowSize.y);
 	}
 	else
 	{
-		windowRect = Rect (customPosition.x, customPosition.y, windowSize.x, windowSize.y);
+		windowRect = new Rect(customPosition.x, customPosition.y, windowSize.x, windowSize.y);
 	}
-	associatedInventory=GetComponent(Inventory);//keepin track of the inventory script
-	if (GetComponent(Character) != null)
+	associatedInventory=GetComponent<Inventory>();//keepin track of the inventory script
+	if (GetComponent<Character>() != null)
 	{
 		cSheetFound = true;
-		cSheet = GetComponent(Character);
+		cSheet = GetComponent<Character>();
 	}
 	else
 	{
@@ -59,14 +63,12 @@ function Awake()
 }
 
 //Update the inv list
-function UpdateInventoryList()
-{
+public void UpdateInventoryList (){
 	UpdatedList = associatedInventory.Contents;
 	//Debug.Log("Inventory Updated");
 }
 
-function Update()
-{
+void Update (){
 	if(Input.GetKeyDown(KeyCode.Escape)) //Pressed escape
 	{
 		ClearDraggedItem(); //Get rid of the dragged item.
@@ -111,13 +113,12 @@ function Update()
 }
 
 //Drawing the Inventory window
-function OnGUI()
-{
+void OnGUI (){
 	GUI.skin = invSkin; //Use the invSkin
 	if(itemBeingDragged != null) //If we are dragging an Item, draw the button on top:
 	{
 		GUI.depth = 3;
-		GUI.Button(Rect(draggedItemPosition.x,draggedItemPosition.y,draggedItemSize.x,draggedItemSize.y),itemBeingDragged.itemIcon);
+		GUI.Button( new Rect(draggedItemPosition.x,draggedItemPosition.y,draggedItemSize.x,draggedItemSize.y),itemBeingDragged.itemIcon);
 		GUI.depth = 0;
 	}
 	
@@ -129,30 +130,29 @@ function OnGUI()
 }
 
 //Setting up the Inventory window
-function DisplayInventoryWindow(windowID:int)
-{
+void DisplayInventoryWindow ( int windowID  ){
 
 	if (canBeDragged == true)
 	{
-		GUI.DragWindow (Rect (0,0, 10000, 30));  //the window to be able to be dragged
+		GUI.DragWindow ( new Rect(0,0, 10000, 30));  //the window to be able to be dragged
 	}
 	
-	var currentX = 0 + Offset.x; //Where to put the first items.
-	var currentY = 18 + Offset.y; //Im setting the start y position to 18 to give room for the title bar on the window.
+	float currentX= 0 + Offset.x; //Where to put the first items.
+	float currentY= 18 + Offset.y; //Im setting the start y position to 18 to give room for the title bar on the window.
 	
-	for(var i:Transform in UpdatedList) //Start a loop for whats in our list.
+	foreach(Transform i in UpdatedList) //Start a loop for whats in our list.
 	{
-		var item=i.GetComponent(Item);
+		Item item=i.GetComponent<Item>();
 		if (cSheetFound) //CSheet was found (recommended)
 		{
-			if(GUI.Button(Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
+			if(GUI.Button( new Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
 			{
-				var dragitem=true; //Incase we stop dragging an item we dont want to redrag a new one.
+				bool dragitem = true; //Incase we stop dragging an item we dont want to redrag a new one.
 				if(itemBeingDragged == item) //We clicked the item, then clicked it again
 				{
 					if (cSheetFound)
 					{
-						GetComponent(Character).UseItem(item,0,true); //We use the item.
+						GetComponent<Character>().UseItem(item,0,true); //We use the item.
 					}
 					ClearDraggedItem(); //Stop dragging
 					dragitem = false; //Dont redrag
@@ -171,7 +171,7 @@ function DisplayInventoryWindow(windowID:int)
 						}
 						else
 						{
-							i.GetComponent(ItemEffect).UseEffect(); //It's not equipment so we just use the effect.
+							i.GetComponent<ItemEffect>().UseEffect(); //It's not equipment so we just use the effect.
 						}
 					}
 				}
@@ -183,11 +183,11 @@ function DisplayInventoryWindow(windowID:int)
 		}
 		else //No CSheet was found (not recommended)
 		{
-			if(GUI.Button(Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
+			if(GUI.Button( new Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
 			{
 				if (Event.current.button == 0 && item.isEquipment != true) //Check to see if it was a left click.
 				{
-					i.GetComponent(ItemEffect).UseEffect(); //Use the effect of the item.
+					i.GetComponent<ItemEffect>().UseEffect(); //Use the effect of the item.
 				}
 				else if (Event.current.button == 1) //If it was a right click we want to drop the item.
 				{
@@ -198,7 +198,7 @@ function DisplayInventoryWindow(windowID:int)
 		
 		if(item.stackable) //If the item can be stacked:
 		{
-			GUI.Label(Rect(currentX, currentY, itemIconSize.x, itemIconSize.y), "" + item.stack, "Stacks"); //Showing the number (if stacked).
+			GUI.Label( new Rect(currentX, currentY, itemIconSize.x, itemIconSize.y), "" + item.stack, "Stacks"); //Showing the number (if stacked).
 		}
 		
 		currentX += itemIconSize.x;
@@ -215,7 +215,7 @@ function DisplayInventoryWindow(windowID:int)
 }
 
 //If we are dragging an item, we will clear it.
-function ClearDraggedItem()
-{
+public void ClearDraggedItem (){
 	itemBeingDragged=null;
+}
 }

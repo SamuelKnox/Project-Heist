@@ -1,58 +1,60 @@
+using UnityEngine;
+using System.Collections;
+[AddComponentMenu ("Inventory/Character Sheet")]
+[RequireComponent(typeof (Inventory))]
+public class Character : MonoBehaviour {
 //The Character window (CSheet).
 
-var WeaponSlot : Transform; //This is where the Weapons are going to go (be parented too). In my case it's the "Melee" gameobject.
+public Transform WeaponSlot; //This is where the Weapons are going to go (be parented too). In my case it's the "Melee" gameobject.
 
-private var ArmorSlot : Item[]; //This is the built in Array that stores the Items equipped. You can change this to static if you want to access it from another script.
-var ArmorSlotName : String[]; //This determines how many slots the character has (Head, Legs, Weapon and so on) and the text on each slot.
-var buttonPositions : Rect[]; //This list will contain where all buttons, equipped or not will be and SHOULD HAVE THE SAME NUMBER OF cells as the ArmorSlot array.
+private Item[] ArmorSlot; //This is the built in Array that stores the Items equipped. You can change this to static if you want to access it from another script.
+public string[] ArmorSlotName; //This determines how many slots the character has (Head, Legs, Weapon and so on) and the text on each slot.
+public Rect[] buttonPositions; //This list will contain where all buttons, equipped or not will be and SHOULD HAVE THE SAME NUMBER OF cells as the ArmorSlot array.
 
-var windowSize : Vector2 = Vector2(375,300); //The size of the character window.
-var useCustomPosition = false; //Do we want to use the customPosition variable to define where on the screen the Character window will appear.
-var customPosition : Vector2 = Vector2 (70, 70); //The custom position of the Character window.
-var cSheetSkin : GUISkin; //This is where you can add a custom GUI skin or use the one included (CSheetSkin) under the Resources folder.
-var canBeDragged = true; //Can the Character window be dragged?
+Vector2 windowSize = new Vector2(375,300); //The size of the character window.
+bool useCustomPosition = false; //Do we want to use the customPosition variable to define where on the screen the Character window will appear.
+Vector2 customPosition = new Vector2 (70, 70); //The custom position of the Character window.
+public GUISkin cSheetSkin; //This is where you can add a custom GUI skin or use the one included (CSheetSkin) under the Resources folder.
+bool canBeDragged = true; //Can the Character window be dragged?
 
-var onOffButton : KeyCode = KeyCode.I; //The key to toggle the Character window on and of.
+KeyCode onOffButton = KeyCode.I; //The key to toggle the Character window on and of.
 
-var DebugMode = false; //If this is enabled, debug.logs will print out information when something happens (equipping items etc.).
+bool DebugMode = false; //If this is enabled, debug.logs will print out information when something happens (equipping items etc.).
 
-static var csheet = false; //Helps with turning the CharacterSheet on and off.
+static bool csheet = false; //Helps with turning the CharacterSheet on and off.
 
-private var windowRect = Rect(100,100,200,300); //Keeping track of our character window.
+private Rect windowRect= new Rect(100,100,200,300); //Keeping track of our character window.
 
 //These are keeping track of components such as equipmentEffects and Audio.
-private var playersinv; //Refers to the Inventory script.
-private var equipmentEffectIs = false;
-private var invAudio : InvAudio;
-private var invDispKeyIsSame = false;
+private Inventory playersinv; //Refers to the Inventory script.
+private bool equipmentEffectIs = false;
+private InvAudio invAudio;
+private bool invDispKeyIsSame = false;
 
-@script AddComponentMenu ("Inventory/Character Sheet")
-@script RequireComponent(Inventory)
+
 
 //Assign the differnet components to variables and other "behind the scenes" stuff.
-function Awake ()
-{
-	playersinv = GetComponent(Inventory);
+void Awake (){
+	playersinv = GetComponent<Inventory>();
 
 	if (useCustomPosition == false)
 	{
-		windowRect = Rect(Screen.width-windowSize.x-70,Screen.height-windowSize.y-(162.5+70*2),windowSize.x,windowSize.y);
+		windowRect = new Rect(Screen.width-windowSize.x-70,Screen.height-windowSize.y-(162.5f+70*2),windowSize.x,windowSize.y);
 	}
 	else
 	{
-		windowRect = Rect(customPosition.x,customPosition.y,windowSize.x,windowSize.y);
+		windowRect = new Rect(customPosition.x,customPosition.y,windowSize.x,windowSize.y);
 	}
-	invAudio = GetComponent(InvAudio);
-	if (GetComponent(InventoryDisplay).onOffButton == onOffButton)
+	invAudio = GetComponent<InvAudio>();
+	if (GetComponent<InventoryDisplay>().onOffButton == onOffButton)
 	{
 		invDispKeyIsSame = true;
 	}
 }
 
 //Take care of the array lengths.
-function Start ()
-{
-	ArmorSlot = new Item [ArmorSlotName.length];
+void Start (){
+	ArmorSlot = new Item [ArmorSlotName.Length];
 	if (buttonPositions.Length != ArmorSlotName.Length)
 	{
 		Debug.LogError("The variables on the Character script attached to " + transform.name + " are not set up correctly. There needs to be an equal amount of slots on 'ArmorSlotName' and 'buttonPositions'.");
@@ -60,9 +62,8 @@ function Start ()
 }
 
 //Checking if we already have somthing equipped
-function CheckSlot(tocheck:int)
-{
-	var toreturn=false;
+bool CheckSlot ( int tocheck  ){
+	bool toreturn = false;
 	if(ArmorSlot[tocheck]!=null){
 		toreturn=true;
 	}
@@ -70,15 +71,14 @@ function CheckSlot(tocheck:int)
 }
 
 //Using the item. If we assign a slot, we already know where to equip it.
-function UseItem(i:Item,slot:int,autoequip:boolean)
-{
-	if(i.isEquipment){
+public void UseItem ( Item i ,  int slot ,  bool autoequip  ){
+	 if(i.isEquipment){
 		//This is in case we dbl click the item, it will auto equip it. REMEMBER TO MAKE THE ITEM TYPE AND THE SLOT YOU WANT IT TO BE EQUIPPED TO HAVE THE SAME NAME.
 		if(autoequip)
 		{
-			var index=0; //Keeping track of where we are in the list.
-			var equipto=0; //Keeping track of where we want to be.
-			for(var a in ArmorSlotName) //Loop through all the named slots on the armorslots list
+			float index = 0; //Keeping track of where we are in the list.
+			float equipto = 0; //Keeping track of where we want to be.
+			foreach(var a in ArmorSlotName) //Loop through all the named slots on the armorslots list
 			{
 				if(a==i.itemType) //if the name is the same as the armor type.
 				{
@@ -86,7 +86,7 @@ function UseItem(i:Item,slot:int,autoequip:boolean)
 				}
 				index++; //We move on to the next slot.
 			}
-			EquipItem(i,equipto);
+			EquipItem(i,(int)equipto);
 		}
 		else //If we dont auto equip it then it means we must of tried to equip it to a slot so we make sure the item can be equipped to that slot.
 		{
@@ -103,8 +103,7 @@ function UseItem(i:Item,slot:int,autoequip:boolean)
 }
 
 //Equip an item to a slot.
-function EquipItem(i:Item,slot:int)
-{
+void EquipItem ( Item i ,  int slot  ){
 	if(i.itemType == ArmorSlotName[slot]) //If the item can be equipped there:
 	{
 		if(CheckSlot(slot)) //If theres an item equipped to that slot we unequip it first:
@@ -117,10 +116,10 @@ function EquipItem(i:Item,slot:int)
 		gameObject.SendMessage ("PlayEquipSound", SendMessageOptions.DontRequireReceiver); //Play sound
 		
 		//We tell the Item to handle EquipmentEffects (if any).
-		if (i.GetComponent(EquipmentEffect) != null)
+		if (i.equipmentEffect != null)
 		{
 			equipmentEffectIs = true;
-			i.GetComponent(EquipmentEffect).EquipmentEffectToggle(equipmentEffectIs);
+			i.GetComponent<EquipmentEffect>().EquipmentEffectToggle(equipmentEffectIs);
 		}
 		
 		//If the item is also a weapon we call the PlaceWeapon function.
@@ -146,15 +145,14 @@ function EquipItem(i:Item,slot:int)
 }
 
 //Unequip an item.
-function UnequipItem(i:Item)
-{
+void UnequipItem ( Item i  ){
 	gameObject.SendMessage ("PlayPickUpSound", SendMessageOptions.DontRequireReceiver); //Play sound
 	
 	//We tell the Item to disable EquipmentEffects (if any).
 	if (i.equipmentEffect != null)
 	{
 		equipmentEffectIs = false;
-		i.GetComponent(EquipmentEffect).EquipmentEffectToggle(equipmentEffectIs);
+		i.GetComponent<EquipmentEffect>().EquipmentEffectToggle(equipmentEffectIs);
 	}
 	
 	//If it's a weapon we call the RemoveWeapon function.
@@ -170,31 +168,28 @@ function UnequipItem(i:Item)
 }
 
 //Places the weapon in the hand of the Player.
-function PlaceWeapon (Item)
-{
-		var Clone = Instantiate (Item.equippedWeaponVersion, WeaponSlot.position, WeaponSlot.rotation);
-		Clone.name = Item.equippedWeaponVersion.name;
+void PlaceWeapon (Item item){
+		GameObject Clone= GameObject.Instantiate(item.equippedWeaponVersion, WeaponSlot.position, WeaponSlot.rotation) as GameObject; 
+		Clone.name = item.equippedWeaponVersion.name;
 		Clone.transform.parent = WeaponSlot;
 		if (DebugMode)
 		{
-			Debug.Log(Item.name + " has been placed as weapon");
+			Debug.Log(item.name + " has been placed as weapon");
 		}
 }
 
 //Removes the weapon from the hand of the Player.
-function RemoveWeapon (Item)
-{	if (Item.equippedWeaponVersion != null)
+void RemoveWeapon (Item item){	if (item.equippedWeaponVersion != null)
 	{
-		Destroy(WeaponSlot.FindChild(""+Item.equippedWeaponVersion.name).gameObject);
+		Destroy(WeaponSlot.FindChild(""+item.equippedWeaponVersion.name).gameObject);
 		if (DebugMode)
 		{
-			Debug.Log(Item.name + " has been removed as weapon");
+			Debug.Log(item.name + " has been removed as weapon");
 		}
 	}
 }
 
-function Update ()
-{
+void Update (){
 	//This will turn the character sheet on and off.
 	if (Input.GetKeyDown(onOffButton))
 	{
@@ -220,8 +215,7 @@ function Update ()
 }
 
 //Draw the Character Window
-function OnGUI()
-{
+void OnGUI (){
 	GUI.skin = cSheetSkin; //Use the cSheetSkin variable.
 	
 	if(csheet) //If the csheet is opened up.
@@ -232,21 +226,20 @@ function OnGUI()
 }
 
 //This will display the character sheet and handle the buttons.
-function DisplayCSheetWindow(windowID:int)
-{
+void DisplayCSheetWindow ( int windowID  ){
 	if (canBeDragged == true)
 	{
-		GUI.DragWindow (Rect (0,0, 10000, 30));  //The window is dragable.
+		GUI.DragWindow ( new Rect(0,0, 10000, 30));  //The window is dragable.
 	}
 	
-	var index=0;
-	for(var a in ArmorSlot) //Loop through the ArmorSlot array.
+	int index = 0;
+	foreach(var a in ArmorSlot) //Loop through the ArmorSlot array.
 	{
 		if(a==null)
 		{
 			if(GUI.Button(buttonPositions[index], ArmorSlotName[index])) //If we click this button (that has no item equipped):
 			{
-				var id=GetComponent(InventoryDisplay);
+				InventoryDisplay id=GetComponent<InventoryDisplay>();
 				if(id.itemBeingDragged != null) //If we are dragging an item:
 				{
 					EquipItem(id.itemBeingDragged,index); //Equip the Item.
@@ -258,13 +251,13 @@ function DisplayCSheetWindow(windowID:int)
 		{
 			if(GUI.Button(buttonPositions[index],ArmorSlot[index].itemIcon)) //If we click this button (that has an item equipped):
 			{
-				var id2=GetComponent(InventoryDisplay);
+				InventoryDisplay id2=GetComponent<InventoryDisplay>();
 				if(id2.itemBeingDragged != null) //If we are dragging an item:
 				{
 					EquipItem(id2.itemBeingDragged,index); //Equip the Item.
 					id2.ClearDraggedItem(); //Stop dragging the item.
 				}
-				else if (playersinv.Contents.length < playersinv.MaxContent) //If there is room in the inventory:
+				else if (playersinv.Contents.Length < playersinv.MaxContent) //If there is room in the inventory:
 				{
 					UnequipItem(ArmorSlot[index]); //Unequip the Item.
 					ArmorSlot[index] = null; //Clear the slot.
@@ -278,4 +271,6 @@ function DisplayCSheetWindow(windowID:int)
 		}
 		index++;
 	}
+}
+
 }

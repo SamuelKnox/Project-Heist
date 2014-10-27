@@ -1,29 +1,31 @@
-#pragma strict
+using UnityEngine;
+using System.Collections;
+[AddComponentMenu ("Inventory/Items/Item Effect")]
+[RequireComponent(typeof (Item))]
+public class ItemEffect : MonoBehaviour {
+
 
 //This script allows you to insert code when the Item is used (clicked on in the inventory).
 
-var deleteOnUse = true;
+bool deleteOnUse = true;
 
-private var playersInv : Inventory;
-private var item : Item;
+private Inventory playersInv;
+private Item item;
 
-@script AddComponentMenu ("Inventory/Items/Item Effect")
-@script RequireComponent(Item)
+
 
 //This is where we find the components we need
-function Awake ()
-{
-	playersInv = FindObjectOfType(Inventory); //finding the players inv.
+void Awake (){
+	playersInv = FindObjectOfType(typeof(Inventory)) as Inventory; //finding the players inv.
 	if (playersInv == null)
 	{
 		Debug.LogWarning("No 'Inventory' found in game. The Item " + transform.name + " has been disabled for pickup (canGet = false).");
 	}
-	item = GetComponent(Item);
+	item = GetComponent<Item>();
 }
 
 //This is called when the object should be used.
-function UseEffect () 
-{
+public void UseEffect (){
 	Debug.LogWarning("<INSERT CUSTOM ACTION HERE>"); //INSERT CUSTOM CODE HERE!
 	
 	//Play a sound
@@ -37,8 +39,7 @@ function UseEffect ()
 }
 
 //This takes care of deletion
-function DeleteUsedItem()
-{
+void DeleteUsedItem (){
 	if (item.stack == 1) //Remove item
 	{
 		playersInv.RemoveItem(this.gameObject.transform);
@@ -48,4 +49,5 @@ function DeleteUsedItem()
 		item.stack -= 1;
 	}
 	Debug.Log(item.name + " has been deleted on use");
+}
 }

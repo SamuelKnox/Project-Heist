@@ -1,31 +1,32 @@
-#pragma strict
-#pragma downcast
+using UnityEngine;
+using System.Collections;
+
+public class InvPauseGame : MonoBehaviour {
+
+
 
 /*This script can be attached if you want to do one of the following things:
 1. Pause/Unpause the game.
 2. Enable/Disable the MouseLook component.
 3. Lock/Unlock the mouse cursor.
 */
+public bool pauseGame = true; //Do we want to pause/unpause the game?
 
-
-var pauseGame = true; //Do we want to pause/unpause the game?
-
-var disableMouseLookComponent = true; //Do we want to enable/disable the MouseLook component?
+public bool disableMouseLookComponent = true; //Do we want to enable/disable the MouseLook component?
 //These two variables are used when disabling/enabling the MouseLook component.
-var ThePlayer : Transform;
-var TheCamera : Transform;
+public Transform ThePlayer;
+public Transform TheCamera;
 
-var lockUnlockCursor = true; //Do we want to lock/unlock the mouse cursor?
+bool lockUnlockCursor = true; //Do we want to lock/unlock the mouse cursor?
 
 //Storing the components
-private var lookAround01 : Behaviour;
-private var lookAround02 : Behaviour;
+private Behaviour lookAround01;
+private Behaviour lookAround02;
 
-@script AddComponentMenu ("Inventory/Other/Inv Pause Game")
+[AddComponentMenu ("Inventory/Other/Inv Pause Game")]
 
 //Checking for the Inventory object and loading in components.
-function Awake () 
-{
+void Awake (){
 	if (transform.name != "Inventory")
 	{
 		Debug.LogError("A 'InvPauseGame' script is attached to " + transform.name + ". It needs to be attached to an 'Inventory' object.");
@@ -35,12 +36,14 @@ function Awake ()
 	{
 		if (ThePlayer != null && TheCamera != null)
 		{
-			if (ThePlayer.GetComponent("MouseLook") != null && TheCamera.GetComponent("MouseLook") != null)
+				/*
+			if (ThePlayer.GetComponent<MouseLook>() != null && TheCamera.GetComponent<MouseLook>() != null)
 			{
-				lookAround01 = ThePlayer.GetComponent("MouseLook");
-				lookAround02 = TheCamera.GetComponent("MouseLook");
+				lookAround01 = ThePlayer.GetComponent<MouseLook>();
+				lookAround02 = TheCamera.GetComponent<MouseLook>();
 			}
-			else
+			*/
+			//else
 			{
 				Debug.LogError("The 'InvPauseGame' script on " + transform.name + " has a variable called 'disableMouseLookComponent' which is set to true though no MouseLook component can be found under (either) the Player or Camera");
 				disableMouseLookComponent = false;
@@ -55,9 +58,8 @@ function Awake ()
 }
 
 //This function is called from the InventoryDisplay and Character script.
-function PauseGame (pauseIt : boolean)
-{
-	//Locking the cursor
+void PauseGame ( bool pauseIt  ){
+	 //Locking the cursor
 	if (lockUnlockCursor == true)
 	{
 		if (pauseIt == true)
@@ -75,13 +77,13 @@ function PauseGame (pauseIt : boolean)
 	{
 		if (pauseIt == true)
 		{
-			Time.timeScale = 0.0;
-			Time.fixedDeltaTime = 0.02 * Time.timeScale;
+			Time.timeScale = 0.0f;
+			Time.fixedDeltaTime = 0.02f * Time.timeScale;
 		}
 		else
 		{
-			Time.timeScale = 1.0;
-			Time.fixedDeltaTime = 0.02 * Time.timeScale;
+			Time.timeScale = 1.0f;
+			Time.fixedDeltaTime = 0.02f * Time.timeScale;
 		}
 	}
 	
@@ -106,4 +108,5 @@ function PauseGame (pauseIt : boolean)
 			Debug.LogError("The variables of the 'InvPauseGame' script on '" + transform.name + "' has not been assigned.");
 		}
 	}
+}
 }

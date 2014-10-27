@@ -1,22 +1,25 @@
+using UnityEngine;
+using System.Collections;
+[AddComponentMenu ("Inventory/Inventory")]
+public class Inventory : MonoBehaviour {
 //This is the central piece of the Inventory System.
 
-var Contents : Transform[]; //The content of the Inventory
-var MaxContent : int = 12; //The maximum number of items the Player can carry.
+public Transform[] Contents; //The content of the Inventory
+public int MaxContent = 12; //The maximum number of items the Player can carry.
 
-var DebugMode = false; //If this is turned on the Inventory script will output the base of what it's doing to the Console window.
+bool DebugMode = false; //If this is turned on the Inventory script will output the base of what it's doing to the Console window.
 
-private var playersInvDisplay : InventoryDisplay; //Keep track of the InventoryDisplay script.
+private InventoryDisplay playersInvDisplay; //Keep track of the InventoryDisplay script.
 
-static var itemHolderObject : Transform; //The object the unactive items are going to be parented to. In most cases this is going to be the Inventory object itself.
+public Transform itemHolderObject; //The object the unactive items are going to be parented to. In most cases this is going to be the Inventory object itself.
 
-@script AddComponentMenu ("Inventory/Inventory")
+
 
 //Handle components and assign the itemHolderObject.
-function Awake ()
-{
+void Awake (){
 	itemHolderObject = gameObject.transform;
 	
-	playersInvDisplay = GetComponent(InventoryDisplay);
+	playersInvDisplay = GetComponent<InventoryDisplay>();
 	if (playersInvDisplay == null)
 	{
 		Debug.LogError("No Inventory Display script was found on " + transform.name + " but an Inventory script was.");
@@ -25,12 +28,12 @@ function Awake ()
 }
 
 //Add an item to the inventory.
-function AddItem(Item:Transform)
-{
-	var newContents = new Array(Contents);
+public void AddItem ( Transform Item  ){
+	ArrayList newContents = new ArrayList();
+	//FIXME_VAR_TYPE newContents= new Array(Contents);
 	newContents.Add(Item);
-	Contents=newContents.ToBuiltin(Transform); //Array to unity builtin array
-	
+	//Contents=newContents.ToBuiltin(Transform); //Array to unity builtin array
+	newContents.CopyTo(Contents); //Array to unity builtin array
 	if (DebugMode)
 	{
 		Debug.Log(Item.name+" has been added to inventroy");
@@ -44,12 +47,12 @@ function AddItem(Item:Transform)
 }
 
 //Removed an item from the inventory (IT DOESN'T DROP IT).
-function RemoveItem(Item:Transform)
-{
-	var newContents=new Array(Contents);
-	var index=0;
-	var shouldend=false;
-	for(var i:Transform in newContents) //Loop through the Items in the Inventory:
+public void RemoveItem ( Transform Item  ){
+		ArrayList newContents = new ArrayList();
+	//FIXME_VAR_TYPE newContents=new Array(Contents); //!!!!//
+	int index = 0;
+	bool shouldend = false;
+	foreach(Transform i in newContents) //Loop through the Items in the Inventory:
 	{
 		if(i == Item) //When a match is found, remove the Item.
 		{
@@ -61,7 +64,8 @@ function RemoveItem(Item:Transform)
 		
 		if(shouldend) //Exit the loop
 		{
-			Contents=newContents.ToBuiltin(Transform);
+			//Contents=newContents.ToBuiltin(Transform); //!!!!//
+			Contents=newContents.ToArray(typeof (Transform)) as Transform[];
 			if (DebugMode)
 			{
 				Debug.Log(Item.name+" has been removed from inventroy");
@@ -76,11 +80,10 @@ function RemoveItem(Item:Transform)
 }
 
 //Dropping an Item from the Inventory
-function DropItem(item)
-{
+public void DropItem (Item item){
 	gameObject.SendMessage ("PlayDropItemSound", SendMessageOptions.DontRequireReceiver); //Play sound
 	
-	var makeDuplicate = false;
+	bool makeDuplicate = false;
 	if (item.stack == 1) //Drop item
 	{
 		RemoveItem(item.transform);
@@ -100,11 +103,10 @@ function DropItem(item)
 }
 
 //This will tell you everything that is in the inventory.
-function DebugInfo()
-{
+void DebugInfo (){
 		Debug.Log("Inventory Debug - Contents");
-	items=0;
-	for(var i:Transform in Contents){
+	int items=0;
+	foreach(Transform i in Contents){
 		items++;
 		Debug.Log(i.name);
 	}
@@ -112,7 +114,7 @@ function DebugInfo()
 }
 
 //Drawing an 'S' in the scene view on top of the object the Inventory is attached to stay organized.
-function OnDrawGizmos ()
-{
-	Gizmos.DrawIcon (Vector3(transform.position.x, transform.position.y + 2.3, transform.position.z), "InventoryGizmo.png", true);
+void OnDrawGizmos (){
+	Gizmos.DrawIcon (new Vector3(transform.position.x, transform.position.y + 2.3f, transform.position.z), "InventoryGizmo.png", true);
+}
 }

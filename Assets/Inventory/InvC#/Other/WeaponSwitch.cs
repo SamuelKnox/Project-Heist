@@ -1,38 +1,40 @@
-#pragma strict
+using UnityEngine;
+using System.Collections;
+
+public class WeaponSwitch : MonoBehaviour {
+
 
 //This is an example of how WeaponSwitching could be handled together with the Inventory System in a First Person game.
 //This method is fairly taxing but works great for quickly switching between weapons and having the weapons displayed in the top left corner.
 //To learn how to use/write this kind of script, please visit http://youtube.com/brackeys/ since we create a similar (not as advanced) script in our Survival Game Series.
 //Attach the script to the object which the weapons are parented to when equipped.
 
-private var currentWeapon = 0; //The Weapon currently selected as an int.
-var maxWeapons = 2; //The maximum number of weapons the Player can carry.
+private int currentWeapon = 0; //The Weapon currently selected as an int.
+int maxWeapons = 2; //The maximum number of weapons the Player can carry.
 
-var Fists : Transform; //The default 'Fists' object to use when nothing is equipped. The system will make sure that there is always a 'Fists' object unless all weaponSlots are filled.
-var fistsOnObject = true; //Are there a 'Fists' object?
+Transform Fists; //The default 'Fists' object to use when nothing is equipped. The system will make sure that there is always a 'Fists' object unless all weaponSlots are filled.
+bool fistsOnObject = true; //Are there a 'Fists' object?
 
-var theSkin : GUISkin; //This is where you can assign a custom GUI skin or use the one included (OtherSkin) under the Resources folder.
+GUISkin theSkin; //This is where you can assign a custom GUI skin or use the one included (OtherSkin) under the Resources folder.
 
-var switchBetweenAnimations = false; //Set this to true if your Character/Arms has animations for when holding a weapon for using fists only. This technique can also be applied if you want different weapons to have different animations.
-var theAnimator : Animator; //This is the Animator that we will use for the above.
+bool switchBetweenAnimations = false; //Set this to true if your Character/Arms has animations for when holding a weapon for using fists only. This technique can also be applied if you want different weapons to have different animations.
+Animator theAnimator; //This is the Animator that we will use for the above.
 
-@script AddComponentMenu ("Inventory/Other/Weapon Switch")
+[AddComponentMenu ("Inventory/Other/Weapon Switch")]
 
 //Load the default skin if nothing has been put in.
-function Awake () 
-{
+void Awake (){
 	if (theSkin == null)
 	{
-		theSkin = Resources.Load("OtherSkin", GUISkin);
+		theSkin = Resources.Load("OtherSkin") as GUISkin;
 	}
 }
 
-function Update () 
-{
+void Update (){
 	//Handle the Fists
 	if (transform.childCount-1 < maxWeapons && fistsOnObject == false)
 	{
-		var Clone = Instantiate(Fists, transform.position, transform.rotation);
+		Transform Clone= Instantiate(Fists, transform.position, transform.rotation) as Transform;
 		Clone.transform.parent = transform;
 		Clone.gameObject.name = "Fists";
 		fistsOnObject = true;
@@ -103,9 +105,8 @@ function Update ()
 }
 
 //Selects the weapon based on the currentWeapon variable.
-function SelectWeapon (index : int)
-{
-	for (var i = 0; i < transform.childCount; i++) //Loop through the weapons.
+void SelectWeapon ( int index  ){
+	for (int i = 0; i < transform.childCount; i++) //Loop through the weapons.
 	{
 		//Activate the selected weapon
 		if (i == index)
@@ -133,30 +134,30 @@ function SelectWeapon (index : int)
 }
 
 //Show the selected weapon in the top right corner and the others less visible.
-function OnGUI ()
-{
+void OnGUI (){
 	if (theSkin != null)
 	{
 		GUI.skin = theSkin;
 	}
 
-	GUILayout.BeginArea (Rect (10,10,400,50));
+	GUILayout.BeginArea ( new Rect(10,10,400,50));
 	GUILayout.BeginHorizontal ();
-	GUI.color = Color(1, 1, 1, 0.7);
+	GUI.color = new Color(1, 1, 1, 0.7f);
 	GUILayout.Box("Weapons:");
-	for (var i = 0; i < transform.childCount; i++)
+	for (int i = 0; i < transform.childCount; i++)
 	{
-		var theChild = transform.GetChild(i);
+		Transform theChild = transform.GetChild(i);
 		if (currentWeapon == i)
 		{
-			GUI.color = Color(1, 1, 1, 0.7);
+			GUI.color = new Color(1, 1, 1, 0.7f);
 		}
 		else
 		{
-			GUI.color = Color(1,1,1,0.4);
+			GUI.color = new Color(1,1,1,0.4f);
 		}
 		GUILayout.Box("" + theChild.name);
 	}
 	GUILayout.EndHorizontal();
 	GUILayout.EndArea();
+}
 }

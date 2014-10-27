@@ -1,57 +1,57 @@
-﻿#pragma strict
+using UnityEngine;
+using System.Collections;
+[AddComponentMenu ("Inventory/Items/First Person Pick Up")]
+[RequireComponent(typeof (Item))]
+public class FirstPersonPickUp : MonoBehaviour {
+
 
 //Assign this script to an Item if you want to pick it up in First Person. If this script is not attached the Item can only be picked up when clicking on it with the mouse.
 
-var InstructionBoxSkin : GUISkin; //The skin to use. Default one is 'OtherSkin' under the 'Resources' folder.
-var ButtonToPress : KeyCode = KeyCode.E; //The button to press when picking up the item.
-var PickUpDistance = 1.7f; //The distance from where the Item can be picked up. Remember that this is relative to the center of the Item and the center of the Player.
+GUISkin InstructionBoxSkin; //The skin to use. Default one is 'OtherSkin' under the 'Resources' folder.
+KeyCode ButtonToPress = KeyCode.E; //The button to press when picking up the item.
+float PickUpDistance = 1.7f; //The distance from where the Item can be picked up. Remember that this is relative to the center of the Item and the center of the Player.
 
 //These store information about the Item, if we can pick it up, the Player and the distance to the Player.
-private var canPickUp = false;
-private var theItem : Item;
-private var thePlayer : Transform;
-private var dist = 9999f;
+private bool canPickUp = false;
+private Item theItem;
+private Transform thePlayer;
+private float dist= 9999f;
 
-@script AddComponentMenu ("Inventory/Items/First Person Pick Up")
-@script RequireComponent(Item)
+
 
 //This is where we find the usefull information which we can later access.
-function Awake ()
-{
-	theItem = (GetComponent(Item));
+void Awake (){
+	theItem = (GetComponent<Item>());
 	
 	if (InstructionBoxSkin == null)
 	{
-		InstructionBoxSkin = Resources.Load("OtherSkin", GUISkin);
+		InstructionBoxSkin = Resources.Load("OtherSkin") as GUISkin;
 	}
 }
 
-function RetrievePlayer (theInv : Inventory)
-{
+void RetrievePlayer ( Inventory theInv  ){
 	thePlayer = theInv.transform.parent;
 }
 
-function OnGUI ()
-{
+void OnGUI (){
 	//This is where we draw a box telling the Player how to pick up the item.
 	GUI.skin = InstructionBoxSkin;
-	GUI.color = Color(1, 1, 1, 0.7);
+	GUI.color = new Color(1, 1, 1, 0.7f);
 	
 	if (canPickUp == true)
 	{
 		if (transform.name.Length <= 7)
 		{
-			GUI.Box (Rect (Screen.width*0.5-(165*0.5), 200, 165, 22), "Press E to pick up " + transform.name + ".");
+			GUI.Box ( new Rect(Screen.width*0.5f-(165*0.5f), 200, 165, 22), "Press E to pick up " + transform.name + ".");
 		}
 		else
 		{
-			GUI.Box (Rect (Screen.width*0.5-(185*0.5), 200, 185, 22), "Press E to pick up " + transform.name + ".");
+			GUI.Box ( new Rect(Screen.width*0.5f-(185*0.5f), 200, 185, 22), "Press E to pick up " + transform.name + ".");
 		}
 	}
 }
 
-function Update ()
-{
+void Update (){
 	if (thePlayer != null)
 	{
 		//This is where we enable and disable the Players ability to pick up the item based on the distance to the player.
@@ -74,8 +74,8 @@ function Update ()
 }
 
 //This is just for drawing the sphere in the scene view for easy testing.
-function OnDrawGizmosSelected () 
-{
+void OnDrawGizmosSelected (){
 	Gizmos.color = Color.yellow;
 	Gizmos.DrawWireSphere (transform.position, PickUpDistance);
+}
 }
