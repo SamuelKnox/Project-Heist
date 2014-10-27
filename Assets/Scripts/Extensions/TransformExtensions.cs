@@ -5,28 +5,11 @@ using System;
 public static class TransformExtensions
 {
     /// <summary>
-<<<<<<< HEAD
-    /// Rotates the transform by a specified number of degrees over a set number of seconds
-    /// </summary>
-    public static void RotateOverTime(this Transform transform, Vector3 degrees, float seconds)
-    {
-        if (degrees == null)
-        {
-            Debug.LogError("degrees in Transform.RotateOverTime(Vector3 degrees, float seconds) is null.", transform);
-            return;
-        }
-        if (seconds == 0)
-        {
-            Debug.LogError("seconds in Transform.RotateOverTime(Vector3 degrees, float seconds) must be a positive number.", transform);
-            return;
-        }
-=======
     /// Rotates the transform by a specified number of degrees over a set number of seconds.
     /// For an infinite rotation, multiply the degrees by a float to adjust the speed, and set the duration to 0 seconds.
     /// </summary>
     public static void RotateOverTime(this Transform transform, Vector3 degrees, float seconds)
     {
->>>>>>> Doors
         RotateOverTime rotateOverTimeComponent = transform.gameObject.AddComponent<RotateOverTime>();
         rotateOverTimeComponent.hideFlags = HideFlags.HideInInspector;
         rotateOverTimeComponent.Degrees = degrees;
@@ -60,13 +43,10 @@ class RotateOverTime : MonoBehaviour
 
     private Vector3 GetBalancedRotationSpeeds(Vector3 degrees, float seconds)
     {
-<<<<<<< HEAD
-=======
         if (seconds == 0)
         {
             seconds = 1;
         }
->>>>>>> Doors
         float degreesWeight = (Degrees.x + Degrees.y + Degrees.z) / 3;
         float speedModifier = degreesWeight / seconds;
         float totalChangeInDegrees = Math.Abs(degrees.x) + Math.Abs(degrees.y) + Math.Abs(degrees.z);
@@ -85,19 +65,12 @@ class RotateOverTime : MonoBehaviour
         transform.eulerAngles = Quaternion.Euler(rotationCompleted + startRotation).eulerAngles;
     }
 
-<<<<<<< HEAD
-=======
     //@TODO stop rotations individually, not as a group
->>>>>>> Doors
     private bool IsRotationComplete()
     {
         bool xRotationIsComplete = Math.Abs(rotationCompleted.x) >= Math.Abs(Degrees.x);
         bool yRotationIsComplete = Math.Abs(rotationCompleted.y) >= Math.Abs(Degrees.y);
         bool zRotationIsComplete = Math.Abs(rotationCompleted.z) >= Math.Abs(Degrees.z);
-<<<<<<< HEAD
-        return xRotationIsComplete && yRotationIsComplete && zRotationIsComplete;
-=======
         return xRotationIsComplete && yRotationIsComplete && zRotationIsComplete && Seconds != 0;
->>>>>>> Doors
     }
 }
