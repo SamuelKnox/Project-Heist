@@ -34,11 +34,7 @@ bool canBeDragged = true; //Can the Inventory window be dragged?
 public KeyCode onOffButton = KeyCode.I; //The button that turns the Inventory window on and off.
 
 //Keeping track of components.
-private Inventory associatedInventory;
-private bool cSheetFound = false;
-private Character cSheet;
-
-	
+private Inventory associatedInventory;	
 
 //Store components and adjust the window position.
 void Awake (){
@@ -51,16 +47,6 @@ void Awake (){
 		windowRect = new Rect(customPosition.x, customPosition.y, windowSize.x, windowSize.y);
 	}
 	associatedInventory=GetComponent<Inventory>();//keepin track of the inventory script
-	if (GetComponent<Character>() != null)
-	{
-		cSheetFound = true;
-		cSheet = GetComponent<Character>();
-	}
-	else
-	{
-		Debug.LogError ("No Character script was found on this object. Attaching one allows for functionality such as equipping items.");
-		cSheetFound = false;
-	}
 }
 
 //Update the inv list
@@ -144,56 +130,15 @@ void DisplayInventoryWindow ( int windowID  ){
 	foreach(Transform i in UpdatedList) //Start a loop for whats in our list.
 	{
 		Item item=i.GetComponent<Item>();
-		if (cSheetFound) //CSheet was found (recommended)
+		if(GUI.Button( new Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
 		{
-			if(GUI.Button( new Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
+			if (Event.current.button == 0 && item.isEquipment != true) //Check to see if it was a left click.
 			{
-				bool dragitem = true; //Incase we stop dragging an item we dont want to redrag a new one.
-				if(itemBeingDragged == item) //We clicked the item, then clicked it again
-				{
-					if (cSheetFound)
-					{
-						GetComponent<Character>().UseItem(item,0,true); //We use the item.
-					}
-					ClearDraggedItem(); //Stop dragging
-					dragitem = false; //Dont redrag
-				}
-				if (Event.current.button == 0) //Check to see if it was a left click
-				{
-					if(dragitem)
-					{
-						if (item.isEquipment == true) //If it's equipment
-						{
-							itemBeingDragged = item; //Set the item being dragged.
-							draggedItemSize=itemIconSize; //We set the dragged icon size to our item button size.
-							//We set the position:
-							draggedItemPosition.y=Screen.height-Input.mousePosition.y-15;
-							draggedItemPosition.x=Input.mousePosition.x+15;
-						}
-						else
-						{
-							i.GetComponent<ItemEffect>().UseEffect(); //It's not equipment so we just use the effect.
-						}
-					}
-				}
-				else if (Event.current.button == 1) //If it was a right click we want to drop the item.
-				{
-					associatedInventory.DropItem(item);
-				}
+				i.GetComponent<ItemEffect>().UseEffect(); //Use the effect of the item.
 			}
-		}
-		else //No CSheet was found (not recommended)
-		{
-			if(GUI.Button( new Rect(currentX,currentY,itemIconSize.x,itemIconSize.y),item.itemIcon))
+			else if (Event.current.button == 1) //If it was a right click we want to drop the item.
 			{
-				if (Event.current.button == 0 && item.isEquipment != true) //Check to see if it was a left click.
-				{
-					i.GetComponent<ItemEffect>().UseEffect(); //Use the effect of the item.
-				}
-				else if (Event.current.button == 1) //If it was a right click we want to drop the item.
-				{
-					associatedInventory.DropItem(item);
-				}
+				associatedInventory.DropItem(item);
 			}
 		}
 		

@@ -16,7 +16,6 @@ public bool isAlsoWeapon = false; //Is the Item also a Weapon? This only works w
 public Transform equippedWeaponVersion;
 
 //These will store information about usefull components.
-public EquipmentEffect equipmentEffect;
 static Inventory playersinv;
 
 private bool FPPickUpFound = false;
@@ -39,21 +38,7 @@ void Awake (){
 	if (isEquipment == false && GetComponent<ItemEffect>() == null)
 	{
 		Debug.LogError(gameObject.name + " is not equipment so please assign an ItemEffect script to it");
-	}
-	
-	if (GetComponent<EquipmentEffect>())
-	{
-		equipmentEffect = GetComponent<EquipmentEffect>();
-	}
-	
-	if (GetComponent<FirstPersonPickUp>() != null)
-	{
-		FPPickUpFound = true;
-	}
-	else if (transform.GetComponentInChildren<FirstPersonPickUp>() != null)
-	{
-		FPPickUpFound = true;
-	}
+	}	
 }
 
 //When you click an item
