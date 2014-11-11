@@ -1,0 +1,1 @@
+This folder is for C# extension classes.  The classes are to be named the name of the Object + "Extensions".  So to extend the String class, the name of the extension class would be "StringExtensions".

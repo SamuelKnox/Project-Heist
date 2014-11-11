@@ -11,6 +11,7 @@ public class Explodable : MonoBehaviour {
 	public float autoTime = 3.0f;
 	public float strengthPower = 1.0f;
 	public float blastDiameter = 1.0f;	//area is not actually circular
+	public Transform particlePrefab;
 	//this field specifies the horizontal distance collider should cover
 
 	private float mAutoTimer = 0.0f;
@@ -52,21 +53,18 @@ public class Explodable : MonoBehaviour {
 					Destroy (obj);
 			}
 		}
+		Vector3 position = transform.position;
 		Destroy (gameObject);
+		Instantiate (particlePrefab);
+		particlePrefab.transform.position = position;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("Something entered.");
 		if (!mSet.Contains (other.transform.root.gameObject))
 			mSet.Add (other.transform.root.gameObject);
 	}
 
-	//void OnTriggerStay2D(Collider2D other) {
-//		Debug.Log ("Something entered.");
-//	}
-
 	void OnTriggerExit2D(Collider2D other) {
-		Debug.Log ("Something exited.");
 		if (mSet.Contains (other.transform.root.gameObject))
 			mSet.Remove (other.transform.root.gameObject);
 	}

@@ -403,6 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sneak: 0
   Visibility: .5
+  SpeedReduction: .5
 --- !u!1 &460820831
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +534,14 @@ Prefab:
     - target: {fileID: 3300002, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04986dbd46b000a47a1db3c5a3794fbc, type: 2}
